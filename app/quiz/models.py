@@ -65,7 +65,7 @@ class QuestionModel(db):
             id=self.id, 
             title=self.title, 
             theme_id=self.theme_id,
-            answers=[answer.create_dataclass() for answer in self.answers] if self.answers else []
+            answers=[answer.create_dataclass(class_=Answer) for answer in self.answers] if self.answers else []
             )
     
     def __repr__(self):
