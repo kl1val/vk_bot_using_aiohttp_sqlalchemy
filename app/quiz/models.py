@@ -41,8 +41,8 @@ class ThemeModel(db):
     title = Column(VARCHAR(2000), nullable=False, unique=True)
     questions = relationship("QuestionModel", backref="questions", cascade="all, save-update, delete-orphan")
 
-    def create_dataclass(self) -> Theme:
-        return Theme(id=self.id,title=self.title)
+    def create_dataclass(self, class_: Theme) -> Theme:
+        return class_(id=self.id,title=self.title)
     
     def __repr__(self):
         return f"<ThemeModel(id='{self.id}', title='{self.title}')>"
