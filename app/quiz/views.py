@@ -5,6 +5,7 @@ from aiohttp.web_exceptions import (
 
 )
 from aiohttp_apispec import request_schema, response_schema, docs
+from app.quiz.models import Answer
 
 from app.quiz.schemes import (
     QuestionSchema,
@@ -60,7 +61,7 @@ class QuestionAddView(AuthRequiredMixin, View):
         question = await self.request.app.store.quizzes.create_question(
             title = self.data["title"],
             theme_id = self.data["theme_id"],
-            answers = await self.request.app.store.quizzes.create_answers(answers_list)
+            answers = [Answer(title=answer["title"], is_correct=answer["is_correct"]) for answer in answers_list]
         )
         return json_response(data=QuestionSchema().dump(question))
 
